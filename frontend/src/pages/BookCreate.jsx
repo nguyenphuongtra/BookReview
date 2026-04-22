@@ -11,7 +11,8 @@ const BookCreate = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get("http://localhost:8080/api/authors").then(res => setAuthors(res.data))
+        const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+        axios.get(`${api_url}/api/authors`).then(res => setAuthors(res.data))
     }, [])
     
     const handleCreate = async () => {
@@ -29,7 +30,8 @@ const BookCreate = () => {
         if (hasError) return;
 
         try {
-            await axios.post("http://localhost:8080/api/books", {title, author: {id: authorId}});
+            const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+            await axios.post(`${api_url}/api/books`, {title, author: {id: authorId}});
             navigate("/books/list");
         } catch (error) {
             console.error("Error creating book:", error);

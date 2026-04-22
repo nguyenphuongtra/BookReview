@@ -8,7 +8,8 @@ const BookList = () => {
     const [books, setBooks] = useState([])
     
     const fetchBooks = async () => {
-        const res = await axios.get("http://localhost:8080/api/books");
+        const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+        const res = await axios.get(`${api_url}/api/books`);
         setBooks(res.data)
     }
     useEffect(() => {
@@ -18,7 +19,8 @@ const BookList = () => {
 
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this book?")) {
-            await axios.delete(`http://localhost:8080/api/books/${id}`);
+            const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+            await axios.delete(`${api_url}/api/books/${id}`);
             fetchBooks();
         }
     };

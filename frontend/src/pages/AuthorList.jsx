@@ -10,7 +10,8 @@ const AuthorList = () => {
     const [editedName, setEditedName] = useState("")
 
     const fetchAuthors = async () => {
-        const res = await axios.get("http://localhost:8080/api/authors");
+        const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+        const res = await axios.get(`${api_url}/api/authors`);
         setAuthors(res.data)
     };
     useEffect(() => {
@@ -20,7 +21,8 @@ const AuthorList = () => {
     
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this author?")) {
-            await axios.delete(`http://localhost:8080/api/authors/${id}`);
+            const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+            await axios.delete(`${api_url}/api/authors/${id}`);
             fetchAuthors();
         }
     };
@@ -29,7 +31,8 @@ const AuthorList = () => {
             alert("Name is required");
             return;
         }
-        await axios.put(`http://localhost:8080/api/authors/${id}`, { name: editedName });
+        const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+        await axios.put(`${api_url}/api/authors/${id}`, { name: editedName });
         setEditingId(null);
         setEditedName("");
         fetchAuthors();

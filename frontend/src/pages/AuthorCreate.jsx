@@ -15,7 +15,8 @@ const AuthorCreate = () => {
             return
         }
         try {
-            await axios.post("http://localhost:8080/api/authors", {name});
+            const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+            await axios.post(`${api_url}/api/authors`, {name});
             navigate("/authors/list");
         } catch (error) {
             console.error(error);

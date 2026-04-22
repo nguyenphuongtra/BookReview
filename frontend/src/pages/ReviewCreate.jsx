@@ -12,7 +12,8 @@ const ReviewCreate = () => {
     const navigate = useNavigate()
     
     useEffect(() => {
-        axios.get("http://localhost:8080/api/books").then(res => setBooks(res.data))
+        const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+        axios.get(`${api_url}/api/books`).then(res => setBooks(res.data))
     }, [])
     const handleCreate = async () => {
         let hasError = false;
@@ -29,7 +30,8 @@ const ReviewCreate = () => {
         if (hasError) return;
         
         try {
-            await axios.post("http://localhost:8080/api/reviews", {reviewText, book: {id: bookId}});
+            const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+            await axios.post(`${api_url}/api/reviews`, {reviewText, book: {id: bookId}});
             navigate("/reviews/list");
         } catch (error) {
             console.error("Error creating review:", error);

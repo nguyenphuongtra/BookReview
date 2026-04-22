@@ -7,7 +7,8 @@ const ReviewList = () => {
   const [reviews, setReviews] = useState([])
 
     const fetchReviews = async () => {
-        const res = await axios.get("http://localhost:8080/api/reviews");
+        const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+        const res = await axios.get(`${api_url}/api/reviews`);
         setReviews(res.data)
     };
     useEffect(() => {
@@ -17,7 +18,8 @@ const ReviewList = () => {
     
      const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this review?")) {
-            await axios.delete(`http://localhost:8080/api/reviews/${id}`);
+            const api_url = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+            await axios.delete(`${api_url}/api/reviews/${id}`);
             fetchReviews();
         }
     };
